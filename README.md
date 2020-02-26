@@ -15,5 +15,5 @@ bash aws_helper.sh
 ## Example of generated tutorial
 
 <p align="left">
-  <img src="img/demo_html.png" width="60%">
+  <img src="img/demo_html.png" width="80%">
 </p>
