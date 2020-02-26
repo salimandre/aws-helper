@@ -8,6 +8,6 @@ OS X & Linux:
 bash aws_helper.sh
 ```
 
-<p align="center">
-  <img src="img/demo_bash.png" width="35%">
+<p align="left">
+  <img src="img/demo_bash.png" width="60%">
 </p>
