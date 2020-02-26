@@ -1,5 +1,7 @@
 # AWS Helper
 
+Bash script which generates tutorials for AWS. Bash script takes a tag name variable as entry to customize instances names in tutorials. Tutorials are generated as html script as such they can be loaded by web browser.
+
 ## Installation & Usage
 
 OS X & Linux:
