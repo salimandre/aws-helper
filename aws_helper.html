@@ -1,0 +1,159 @@
+<!DOCTOTYPE html>
+
+<html>
+	<head>
+		<meta charset=utf-8 />
+		<title>AWS Helper</title>
+	</head>
+	 <body>
+		 <p> Welcome on AWS Helper @gLoveiko! <br />
+		 Here are aggregated many tutorials which provide all the steps required to realize your own set up with AWS.</p>
+
+		 <h1> Tutorial: create a public EC2 instance + elastic IP + ping instance + connect to instance </h1>
+		 <h1> Steps </h1>
+		 <ul>
+			 <li> step 0: get to AWS </li>
+			 <li> step 1: create a VPC </li>
+			 <li> step 2: create a (private) subnet </li>
+			 <li> step 3: create an internet gateway </li>
+			 <li> step 4: attach an internet gateway to VPC </li>
+			 <li> step 5: make a subnet public: connect a subnet to internet </li>
+			 <li> step 6: create an EC2 instance </li>
+			 <li> step 7: create an elastic IP </li>
+			 <li> step 8: attach an elastic IP to an instance </li>
+			 <li> step 9: ping an instance </li>
+			 <li> step 10: connect to an instance </li>
+		 </ul>
+
+		 <h1> Step 0: get to AWS </h1>
+
+<p>> Go to <em>https://www.vocareum.com/</em><br />
+> Go to <em>My Classes/AWS Architecture Class</em><br />
+> Click on <strong>AWS Console</strong><br />
+</p>
+		 <h1> Step 1: create a VPC </h1>
+
+<p>> Go to <em>Services/VPC/Your VPCs</em><br />
+> Click on <strong>Create VPC</strong><br />
+> Fill in:<br />
+Name tag: <mark>myBigProj-vpc</mark><br />
+IPv4 CIDR block: <mark>165.62.0.0/16</mark><br />
+> Click on <strong>Create</strong>
+</p> 
+		 <h1> Step 2: create private subnet </h1>
+
+<p>> Go to <em>Services/VPC/Subnets</em><br />
+> Click on <strong>Create subnet</strong><br />
+> Fill in:<br />
+Name tag: <mark>myBigProj-private-subnet</mark><br />
+VPC: <mark> myBigProj-vpc</mark><br />
+Availability Zone: <mark>us-east-1a</mark><br />
+IPv4 CIDR block: <mark>165.62.1.0/24</mark><br />
+> Click on <strong>Create</strong>
+</p> 
+		 <h1> Step 3: create internet gateway myBigProj-igw </h1>
+
+<p>> Go to <em>Services/VPC/Internet Gateways</em><br />
+> Click on <strong>Create an internet gateway</strong><br />
+> Fill in:<br />
+Name tag: <mark>myBigProj-igw</mark><br />
+> Click on <strong>Create</strong> <br /> </p> 
+
+		 <h1> Step 4: attach internet gateway myBigProj-igw to VPC myBigProj-vpc</h1>
+
+<p>> Go to <em>Services/VPC/Internet Gateways</em><br />
+> Click on (select) <strong> myBigProj-igw </strong> <br />
+> Click on <strong> Actions </strong> <br />
+> Click on <strong> Attach to VPC </strong> <br />
+> Fill in:<br />
+VPC: <mark>myBigProj-vpc</mark><br />
+> Click on <strong>Attach</strong> <br /> </p> 
+
+		 <h1> Step 5: create an EC2 instance myBigProj-public-ec2</h1>
+
+<p>> Go to <em>Services/EC2/Instances</em><br />
+> Click on <strong>Launch Instance</strong><br />
+> Choose a 'Free tier eligible' AMI and click on <strong>Select</strong><br />
+> Click on <strong>Next: Configure Instance Details</strong><br />
+Remark: here we could have chosen our instance based on CPU capacity, GPU capacity, RAM etc...<br />
+> Fill in:<br />
+Number of instances: <mark>1</mark><br />
+Network: <mark>myBigProj-vpc</mark><br />
+Subnet: <mark>myBigProj-public-subnet</mark><br />
+> Click on <strong>Next: Add Storage</strong> <br />
+> Click on <strong>Next: Add Tags</strong> <br /> 
+>Fill in:<br />
+Key: <mark>Name</mark><br />
+Value: <mark>myBigProj-public-ec2</mark><br />
+> Click on <strong>Next: Configure Security Group</strong> <br />
+> Fill in:<br />
+Security group name: <mark>myBigProj-sg</mark><br />
+Description: <mark> this is my security group for my EC2 instance myBigProj-public-ec2 </mark><br />
+> Click on the <strong>&#9747;</strong> on the right to remove first default rule of security group <br />
+> Click on <strong>Review and Launch</strong> <br />
+> Click on <strong>Launch</strong> <br />
+
+Select: <strong>Create a new key pair</strong><br />
+Fill in: <mark>myBigProj-keypair</mark><br />
+> Click on <strong>Download Key Pair</strong> <br />
+> Click on <strong>Launch Instances</strong> <br /></p>
+
+		 <h1> Step 6: create an elastic IP -elastic-ip</h1>
+
+<p>> Go to <em>Services/VPC/Elastic IPs</em><br />
+> Click on (select) <strong> Allocate new address </strong> <br />
+> Click on <strong> Allocate </strong> <br />
+> In <em>Services/VPC/Elastic IPs</em> click on <strong>Actions</strong><br />
+> Click on <strong>Add/Edit Tags</strong><br />
+> Click on <strong> Create Tag </strong> <br />
+> Fill in: <br />
+Key <mark>Name</mark><br />
+Value: <mark>myBigProj-elastic-IP</mark> <br />
+> Click on <strong> Save </strong> <br /></p>
+
+		 <h1> Step 7: attach an elastic IP  VPC </h1>
+
+<p>> Go to <em>Services/VPC/Elastic IPs</em><br />
+> Click on <strong> Actions </strong> <br />
+> Click on <strong> Associate address </strong> <br />
+> Fill in:<br />
+Instance: <mark>myBigProj-public-ec2</mark><br />
+Private IP: <mark>165.62.1.xxx</mark> (private IP of instance)<br />
+> Tick the box <mark> &#9745; </mark> to allow <strong> Reassociation </strong> <br />
+> Click on <strong> Associate </strong> <br /></p>
+
+		 <h1> Step 8: ping an instance whose security group is myBigProj-sg </h1>
+
+<p>> Go to <em>Services/VPC/Instances</em><br />
+> Click on (select) <strong> myBigProj-public-ec2 </strong> <br />
+> Below in <em>Description/Security groups</em> click on <strong> myBigProj-sg </strong> with blue link <br />
+> Click on <strong> Inbounds </strong> <br />
+> Click on <strong> Edit </strong><br />
+> Click on <strong> Add Rule </strong><br />
+> Fill in:<br />
+Type: <mark>All ICMP - IPv4</mark><br />
+Source: <mark>Anywhere</mark><br />
+> Click on <strong> Save </strong> <br />
+
+Now using the <strong>public IP (or elastic IP)</strong> associated with our instance <strong>myBigProj-public-ec2</strong> we can ping our instance.<br />
+> In a console (terminal or shell) of your computer just type: <span style="color: #ffffff; background-color: #000000"> ping xxx.xxx.xxx.xxx </span> <br /></p>
+
+		 <h1> Step 9: connect to an instance myBigProj-public-ec2</h1>
+
+<p>> Go to <em>Services/VPC/Instances</em><br />
+Make sure your instance myBigProj-public-ec2 is <span style=color:MediumSeaGreen>running</span>, if not then:<br />
+> Click on (select) <strong> myBigProj-public-ec2 </strong> <br />
+> Click on <strong>Actions</strong> <br />
+> Click on <strong> Instance State </strong> <br />
+> Click on <strong> Start </Strong><br />
+Then <strong>on your computer</strong> do the following steps: <br />
+
+> Go to the <strong>directory</strong> which contains the private key of your instance <strong>myBigProj-keypair.pem</strong><br />
+> In a console (terminal or shell) type the following: <span style="color: #ffffff; background-color: #000000">chmod 400 myBigProj-keypair.pem</span><br />
+It makes sure your key file is not publicly visible<br />
+> In your console (terminal) type the following: <span style="color: #ffffff; background-color: #000000">ssh -i "myBigProj-keypair.pem" ec2-user@xxx.xxx.xxx.xxx</span><br />
+Where xxx.xxx.xxx.xxx is the public IP (or elastic IP) of our instance<br />
+> If it askes <strong>Are you sure you want to continue connecting (yes/no)?</strong> then type <span style="color: #ffffff; background-color: #000000">yes</span><br /></p>
+
+	 </body>
+</html>
